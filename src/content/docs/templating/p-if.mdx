@@ -1,0 +1,30 @@
+---
+title: p-if
+description: A guide in my new Starlight docs site.
+---
+import { Aside } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components'
+
+import pythonCode from '/public/examples/p-if/example1.py?raw';
+import HTMLCode from '/public/examples/p-if/example1.html?raw';
+
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+<script type="mpy" src="/public/examples/p-if/example1.py" config="/public/examples/pyscript.json"></script>
+
+`p-if` is used for toggling elements on the page, similarly to `p-show`, however it completely adds and removes the element it's applied to rather than just changing its CSS display property to "none".
+
+<Aside type="note">
+Because of this difference in behavior, `p-if` should not be applied directly to the element, but instead to a `<template>` tag that encloses the element.
+
+That template element MUST contain only one root element.
+
+This way, Prune can keep a record of the element once it's removed from the page.
+</Aside>
+
+
+
+<Code code={pythonCode} lang="py" title="demo.py" />
+<Code code={HTMLCode} lang="html" title="index.html" />
+<div class="result" set:html={HTMLCode}></div>
+
+

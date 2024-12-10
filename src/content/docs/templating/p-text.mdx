@@ -1,0 +1,54 @@
+---
+title: p-text
+description: A guide in my new Starlight docs site.
+---
+
+import pythonCode from '/public/examples/p-text/example1.py?raw';
+import { Code } from '@astrojs/starlight/components';
+
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+<script type="mpy" src="/public/examples/p-text/example1.py" config="/public/examples/pyscript.json"></script>
+
+
+`p-text` allows you to set the text of an element, the value of this attribute can be any valid python expression.
+
+It can be any type, not necessarily string.
+
+## Simple value
+
+```html title="index.html"
+<h4 p-text="'hello'"></h4>
+```
+<div class="result" >
+    <h4 p-text="'hello'"></h4>
+</div>
+
+## Using value from the store
+
+You can use `p-text` to replace text with a value from the store, here is a little example :
+
+<Code code={pythonCode} lang="py" title="demo.py" />
+
+```html title="index.html"
+<h4 p-text="store.username"></h4>
+```
+
+<div class="result" >
+    <h4 p-text="store.username"></h4>
+</div>
+
+
+## Playing with f string
+
+You can use f string in `p-text` (and in all others `p-` attribute)
+```html title="index.html"
+<h4 p-text="f'The Username is : {store.username}, its age is {10*2}'"></h4>
+```
+
+<div class="result" >
+    <h4 p-text="f'The Username is : {store.username}, its age is {10*2}'"></h4>
+</div>
+
+
+
+

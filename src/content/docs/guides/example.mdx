@@ -1,0 +1,116 @@
+---
+title: Get Started
+description: A guide in my new Starlight docs site.
+---
+import { FileTree } from '@astrojs/starlight/components';
+import { Steps } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components'
+import { Aside } from '@astrojs/starlight/components';
+
+import counterPythonCode from '/public/examples/counter/counter.py?raw';
+import counterHTMLFullCode from '/public/examples/counter/counter-full.html?raw';
+import counterHTMLCode from '/public/examples/counter/counter.html?raw';
+
+export const counterInteractivityCode = counterHTMLFullCode.split('\n').slice(10,14).join('\n')
+
+## Create the project structure
+
+<Steps>
+
+1. Clone the prune repo into your folder:
+
+   ```bash
+   git clone https://github.com/darikoko/prunepy
+   ```
+
+2. Now create 3 files `index.html`, `pyscript.json` and `counter.py`:
+    ```bash
+   touch index.html pyscript.json counter.py
+   ```
+</Steps>
+Finally your project should look like this :
+
+<FileTree>
+
+- index.html
+- counter.py
+- pyscript.json
+- prunepy/
+
+</FileTree>
+
+
+
+## Add some logic in python
+
+The `counter.py` previously created will store the logic of the front.
+
+In this example we will see how to create a simple counter app (Yes I know... for the 1000th time, but this time it will be different, I swear).
+
+Here you write your logic like in a normal python file.
+
+<Aside type="note">As prune use the DOM which is available only in the browser, this code will not run in regular python interpreter because of the prune import. It will be solved by a fake package in the future.</Aside>
+<Code code={counterPythonCode} lang="py" title="counter.py" />
+
+
+<Aside type="tip">
+The last line is really important, it creates an instance of prune where we have to define parameters explicitly.
+<u>**All parameters passed to Prune must be explicitly named.**</u>
+
+These parameters are not directly used by the Prune function or class, instead they are unpacked and made accessible through attributes of the store object, in this example, counter will be accessible as `store.counter`.
+</Aside>
+
+
+## Setup pyscript.json
+The `pyscript.json` file is just a mapping between the URL location of your python files and their location in the python virtual filetree.
+
+```json
+{
+    "files": {
+        "prunepy/prune.py" : "./prune.py"
+    }
+}
+```
+
+The left part is the URL of the file on the server and the right part is the location in python filetree.
+Now in `counter.py` we are able to import `prune.py` as if it was at the same level in the filetree even if `prune.py` is into `prunepy/prune.py`
+
+Nothing really important here.
+
+## Plug the logic into the HTML
+
+Now it's the most interesting part, we will plug the logic into the HTML.
+
+<Code code={counterHTMLFullCode} lang="html" title="counter.html" mark={[6,7,15]} />
+
+
+### The result 🥳
+
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+<script type="mpy" src="/public/examples/counter.py" config="/public/examples/pyscript.json"></script>
+<div class="result" set:html={counterInteractivityCode }>
+</div>
+
+### About the import
+The first two marked lines are symply the pyscript import, thanks to pyscript we can run python in the browser.
+
+The last marked line is the link to the counter.py file,
+- `type="mpy"` tells to pyscript to use micropython, a lightweight python interpreter.
+- `src` is the URL path to the python file we want to link.
+- `config` is the URL path to pyscript.json, which solves import in our python files.
+
+
+### About the templating
+
+As you can see we use `p-...` attribute to plug our logic into the HTML.
+
+Let's see what happens here :
+- `p-text` will change the text of the element to the given expression, in this case it's `store.counter.value` but it could be any valid python expressions
+- `@click` is run when a click event happens on the element
+
+
+
+
+
+
+

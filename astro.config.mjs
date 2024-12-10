@@ -5,9 +5,13 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
+			title: 'PrunePy',
+			customCss: [
+				// Relative path to your custom CSS file
+				'./src/styles/styles.css',
+			  ],
 			social: {
-				github: 'https://github.com/withastro/starlight',
+				github: 'https://github.com/darikoko/prunepy',
 			},
 			sidebar: [
 				{
@@ -18,8 +22,18 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					label: 'Templating',
+					items: [
+						// Each item here is one entry in the navigation menu.
+						{ label: 'p-text', slug: 'templating/p-text' },
+						{ label: 'p-show', slug: 'templating/p-show' },
+						{ label: 'p-if', slug: 'templating/p-if' },
+						{ label: 'p-on (or @)', slug: 'templating/p-on' },
+						{ label: 'p-for', slug: 'templating/p-for' },
+						{ label: 'p-html', slug: 'templating/p-html' },
+						{ label: 'p-ref', slug: 'templating/p-ref' },
+						{ label: 'Example Guide', slug: 'guides/example' },
+					]
 				},
 			],
 		}),

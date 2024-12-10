@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+    <title>Counter</title>
+  </head>
+  <body>
+    <h3 p-text="store.counter.value"></h3>
+    <button @click="store.counter.increment()">Increment</button>
+    <button @click="store.counter.decrement()">Decrement</button>
+    <button @click="store.counter.reset()">Reset</button>
+    <script type="mpy" src="./counter.py" config="./pyscript.json"></script>
+  </body>
+</html>

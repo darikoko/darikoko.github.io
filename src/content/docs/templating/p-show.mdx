@@ -1,0 +1,25 @@
+---
+title: p-show
+description: A guide in my new Starlight docs site.
+---
+import { Aside } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components'
+
+import pythonCode from '/public/examples/p-show/example1.py?raw';
+import HTMLCode from '/public/examples/p-show/example1.html?raw';
+
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+<script type="mpy" src="/public/examples/p-show/example1.py" config="/public/examples/pyscript.json"></script>
+
+`p-show` is used to show/hide elements on the page.
+
+The element is visible if the expression inside `p-show` is True, else it is hidden.
+
+To hide an element, prune will change its CSS display property to “none”.
+
+
+<Code code={pythonCode} lang="py" title="demo.py" />
+<Code code={HTMLCode} lang="html" title="index.html" />
+<div class="result" set:html={HTMLCode}></div>
+
+
