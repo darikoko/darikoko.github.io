@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🦜 Polyglot - Piratical PyScript</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.8.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2024.8.1/core.js"></script>
+</head>
+
+<body{inside_loop_text[0]:i}>
+
+  <h1>Polyglot 🦜 💬 🇬🇧 ➡️ 🏴‍☠️</h1>
+  <h1>TODO LIST</h1>
+
+  <template p-if="'bonsoir'== 'bonsoie'">
+      <div>
+        <p>Jackkkkkkk bon</p>
+    </div>
+  </template>
+
+  <input id="task" type="text" placeholder="add item..." p-ref="taskinput">
+  <button @click="store.todo.add_task(refs.taskinput)">Add task</button>
+
+  <template p-for="(index,task) in enumerate(store.todo.tasks)">
+    <div>
+      <li p-text="task.text" :class="'done' if task.done else ''"></li>
+      <button @click="store.todo.complete_task(index)" p-text="'Complete' if not task.done else 'Pending'"></button>
+      <button @click="store.todo.remove_task(index)">Delete</button>
+    </div>
+  </template>
+  <p p-show="store.user.show">helloo</p>
+  <p p-show="store.user.pseudo">helloo</p>
+  <p p-html="store.pizza.taste">helloo</p>
+  <button id="ok">demo</button>
+  <button p-on:click="store.user.toggle()">toggle</button>
+  <button p-on:click="store.user.show_text('salut')">SHOW</button>
+
+
+  <template p-for="review in store.pizza.reviews">
+    <div>
+      <p p-text="review"></p>
+      <template p-for="jo in range(3)">
+        <div>
+          <li p-text="jo"></li>
+        </div>
+      </template>
+    </div>
+  </template>
+
+  <template p-for="b in range(7)">
+    <div>
+      <li p-text="b"></li>
+    </div>
+  </template>
+
+  <input :class="'red' if store.user.show else ''" class="salut bonjour ciao  j " type="text"
+    :placeholder="store.pizza.taste" @input="store.pizza.change_by_value(event.target.value)" />
+  <div id="output"></div>
+  <!-- Dont forget to add async attribute to script tag to use await etc in pyscript-->
+  <script type="mpy" src="/src/demo.py" config="./package.json" async></script>
+  <style>
+    .red {
+      background: red;
+    }
+
+    .done {
+      text-decoration: line-through;
+    }
+  </style>
+
+
+  </body>
+
+</html>
