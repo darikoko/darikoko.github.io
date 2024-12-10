@@ -1,33 +1,94 @@
 ---
-title: p-on
+title: p-on (or @)
 description: A guide in my new Starlight docs site.
 ---
-`p-on` allows you to easily run code on dispatched DOM events.
+import { Aside } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components'
 
-Here's an example of simple button that print the username of your user when clicked (by calling the print_username method from your `User` class).
+import pythonCode from '/public/examples/p-on/example1.py?raw';
+import HTMLCode from '/public/examples/p-on/example1.html?raw';
 
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+<script type="mpy" src="/public/examples/p-on/example1.py" config="/public/examples/pyscript.json"></script>
 
-```html
-<button p-on:click="store.user.print_username()"></button>
+`p-on` is used to run python code when a specific event trigger.
+
+You can use all events available in the DOM listed here : https://www.w3schools.com/tags/ref_eventattributes.asp
+
+For example if you want to run an function on a click event just use `p-on:click="..."` and put your function call inside.
+
+```html title="index.html"
+<img  :class="'rotate' if store.bob.rotate else ''" src="/images/bob.png"/>
+<button p-on:click="store.bob.toggle_rotate()">Toggle Rotate</button>
 ```
 
+
+
+```python
+from prune import Prune, notify
+
+class Bob:
+    def __init__(self):
+        self.rotate = False
+
+    @notify
+    def toggle_rotate(self):
+        self.rotate = not self.rotate
+
+Prune(bob=Bob())
+```
+
+<div class="result" set:html={
+    `
+    <img  :class="'rotate' if store.bob.rotate else ''" src="/images/bob.png"/>
+    <button p-on:click="store.bob.toggle_rotate()">Toggle Rotate</button>
+    `
+}>
+</div>
 
 ## Shorthand syntax
 
-If `p-on`: is too verbose for your tastes, you can use the shorthand syntax: `@`.
+Instead of writing `p-on:click="..."` you can write `@click="..."`.
 
-Here's the same component as above, but using the shorthand syntax instead:
+## Passing events as parameter
 
-```html
-<button @click="print('Hello World!')">Print Hello World</button>
+Sometimes you need data from an event, in this example we will change the scale of Bob thanks to a range input.
+
+To send the input value to `update_scale` we just have to write `event.target.value`.
+
+The event is accessible like in JS, it's really the same thing.
+
+
+
+```python
+from prune import Prune, notify
+
+class Bob:
+    def __init__(self):
+        self.scale = 1
+
+    @notify
+    def update_scale(self, new_scale:int):
+        self.scale = new_scale
+    
+Prune(bob=Bob())
+```
+<Aside type="note">
+You have to use the name `event` in your `p-on` attribute if you want to access the event.
+
+Even if it's possible, try to avoid sending the event directly to a store's method, it allows you to keep things separated between the display and the logic.
+
+That's why we send `event.target.value` to update_scale instead of sending the whole event.
+</Aside>
+```html title="index.html"
+<img  :style="f'transform: scale({store.bob.scale});'" src="/images/bob.png"/>
+<input @input="store.bob.update_scale(event.target.value)" type="range" min="0" max="2" step="0.1" />
 ```
 
-## Passing events
-
-You can pass the js events object to a python function and use it like you would do in JS.
-
-```html
-<button @click="store.user.say_hi(event)">Add task</button>
-```
-
-
+<div class="result" set:html={
+    `
+    <img  :style="f'transform: scale({store.bob.scale});'" src="/images/bob.png"/>
+    <input @input="store.bob.update_scale(event.target.value)" type="range" min="0" max="2" step="0.1" />
+    `
+}>
+</div>

@@ -1,0 +1,6 @@
+<input p-ref="new_task" type="text" placeholder="Your task">
+<button @click="store.todolist.add_task(refs.new_task.value)">Add Task</button>
+
+<template p-for="task in store.todolist.tasks">
+    <p p-text="task"></p>
+</template>

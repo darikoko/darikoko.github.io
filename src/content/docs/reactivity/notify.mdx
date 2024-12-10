@@ -1,0 +1,27 @@
+---
+title: "@notify"
+description: A guide in my new Starlight docs site.
+---
+
+import pythonCode from '/public/examples/notify/example1.py?raw';
+import HTMLCode from '/public/examples/notify/example1.html?raw';
+
+import { Aside } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components'
+
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+<script type="mpy" src="/public/examples/notify/example1.py" config="/public/examples/pyscript.json"></script>
+
+The reactivity in prune is super simple.
+
+If you want to update the DOM after the execution of a method, just decorate it with `@notify` and the DOM will be updated <u>only once at the end of the method</u>.
+
+<Code code={pythonCode} lang="py" title="demo.py" />
+<Aside type="note">
+Here the increment method will update the DOM but not the decrement method (because @notify is missing on decrement).
+
+Even if the DOM is not updated with decrement, the store is still updated.
+</Aside>
+<Code code={HTMLCode} lang="html" title="index.html" />
+Try to increment 3 times then decrement 3 times and then increment, you will see the DOM update only on increment but the store is always updated.
+<div class="result" set:html={HTMLCode}></div>

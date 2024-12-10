@@ -3,15 +3,23 @@ title: p-for
 description: A guide in my new Starlight docs site.
 ---
 import { Aside } from '@astrojs/starlight/components';
+import pythonCode from '/public/examples/p-for/example1.py?raw';
+import { Code } from '@astrojs/starlight/components';
+
+
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+<script type="mpy" src="/public/examples/p-for/example1.py" config="/public/examples/pyscript.json"></script>
 
 PrunePy's `p-for` directive allows you to create DOM elements by iterating through a list.
 
-Here's a simple example of using it to create a list of colors based on an array.
+You can iterate over store values too but in this examples we only iterate on raw values.
 
-<Aside type="caution">`p-for` MUST be declared on a `<template>` element. That `<template>` element MUST contain **only one root** element</Aside>
+<Aside type="note">`p-for` MUST be declared on a `<template>` with **only one root element**</Aside>
+
+Here's a simple example of using it to create a list of colors based on an array :
 
 
-```html
+```html title="index.html"
 <ul>
     <template p-for="color in ['red', 'blue', 'black']">
         <li p-text="color"></li>
@@ -19,24 +27,35 @@ Here's a simple example of using it to create a list of colors based on an array
 </ul>
 ```
 
+<div class="result">
+    <ul>
+        <template p-for="color in ['red', 'blue', 'black']">
+            <li p-text="color"></li>
+        </template>
+    </ul>
+</div>
 ## Iterate on a range
 
-You can iterate on any iterable, for example a range :
-```html
+```html title="index.html"  
 <ul>
-    <template p-for="i in range(10)">
+    <template p-for="i in range(3,7)">
         <li p-text="i"></li>
     </template>
 </ul>
 ```
-
+<div class="result">
+    <ul>
+        <template p-for="i in range(3,7)">
+            <li p-text="i"></li>
+        </template>
+    </ul>
+</div>
 ## Iterate on dict
 
-You can iterate on any iterable, so a dict works too
-```html
+```html title="index.html"
 <ul>
     <template p-for="key,value in {'taste':'peperonni', 'size': 'XL'}.items()">
-        <li p-text="i">
+        <li>
             <span p-text="key"></span>
             <span> - </span>
             <span p-text="value"></span>
@@ -44,3 +63,15 @@ You can iterate on any iterable, so a dict works too
     </template>
 </ul>
 ```
+
+<div class="result">
+    <ul>
+        <template p-for="key,value in {'taste':'peperonni', 'size': 'XL'}.items()">
+            <li>
+                <span p-text="key"></span>
+                <span> - </span>
+                <span p-text="value"></span>
+            </li>
+        </template>
+    </ul>
+</div>

@@ -1,0 +1,14 @@
+
+<template p-if="store.pokedex.loading">
+    <h4 >Loading...</h4>
+</template>
+<template p-if="store.pokedex.pokemon and not store.pokedex.loading">
+    <div>
+        <h4 p-text="store.pokedex.pokemon['name']"></h4>
+        <img :src="store.pokedex.pokemon['sprites']['front_default']" alt="">
+        <h5 p-text="f'height : {store.pokedex.pokemon['height']}'"></h5>
+        <h5 p-text="f'weight : {store.pokedex.pokemon['weight']}'"></h5>
+    </div>
+</template>
+<!-- Note the 'await' in the @click -->
+<button @click="await store.pokedex.get_random_pokemon()">Get Random Pokemon</button>

@@ -1,0 +1,32 @@
+---
+title: What is PrunePy ?
+description: A guide in my new Starlight docs site.
+---
+import { Aside } from '@astrojs/starlight/components';
+
+PrunePy is born in my mind after being tired of the gap in Dev experience between the back and the front.
+
+In the back all my code is simple to write, test and implement (I use Python, Rust, Zig...).
+
+But in the front my Dev expreience is always awfull.
+
+For many reasons :
+- The Browser is not a cool environment to Dev
+- Most of the time with any JS frameworks your logic and your UI is at the same place, it makes the testing really difficult.
+- You have to think about how to send data and reactivity when your writting your logic because by default the data are scoped into a component which makes data transmission an entire topic.
+
+My point of view is that the logic should be universal and frameworks agnostic.
+
+You should write your logic somewhere, test it like you would do it in Python and then (when everything works) plug it into your UI.
+
+
+<Aside type="tip">
+PrunePy is made to solve that issue : bring a simple dev experience in the front thanks to :
+- A simple but robust programming language : Python
+- A logic isolated from the DOM
+- A global state management to avoid complexity in data transmission
+
+</Aside>
+
+
+

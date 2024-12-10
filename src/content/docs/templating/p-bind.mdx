@@ -1,0 +1,68 @@
+---
+title: p-bind (or :)
+description: A guide in my new Starlight docs site.
+---
+
+import pythonCode from '/public/examples/p-bind/example1.py?raw';
+import HTMLCode from '/public/examples/p-bind/example1.html?raw';
+import { Code } from '@astrojs/starlight/components';
+
+
+<script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+<script type="mpy" src="/public/examples/p-bind/example1.py" config="/public/examples/pyscript.json"></script>
+
+
+`p-bind` allows you to set HTML attributes on elements based on the result of Python expressions.
+
+## Simple example
+
+Here we bind the value of the `contenteditable` attribute to the value of `store.editor.editable`,
+so if it's True, `contenteditable` will be set to True and will be editable else it will be set to False and will not be editable.
+
+
+<Code code={pythonCode} lang="py" title="demo.py" />
+
+```html title="index.html"
+<h4 p-bind:contenteditable="store.editor.editable">Click on me to modify my text</h4>
+<button @click="store.editor.toggle_editable()">Toggle editable</button>
+```
+<div class="result">
+    <h4 p-bind:contenteditable="store.editor.editable">Click on me to modify my text</h4>
+    <button p-on:click="store.editor.toggle_editable()">Toggle editable</button>
+</div>
+
+## Shorthand syntax
+
+You can use `:` instead of `p-bind` like this : 
+
+```html title="index.html"
+<h4 :contenteditable="store.editor.editable">Click on me to modify my text</h4>
+<button @click="store.editor.toggle_editable()">Toggle editable</button>
+```
+
+<div class="result" set:html={`
+    <h4 :contenteditable="store.editor.editable">Click on me to modify my text</h4>
+    <button p-on:click="store.editor.toggle_editable()">Toggle editable</button>` }>
+</div>
+
+## Binding classes
+
+`p-bind:class` behaves differently than other attributes under the hood.
+
+Instead of replacing the whole value of the class attribute it will only add or remove classes to the basic class attribute.
+
+This way you can define classes on your element and choose to add specific classes on conditition. (it's the only binding which does that)
+
+
+As you can see here the text keeps the `italic` class and when `store.editor.editable` is False the `freeze` class is added but doesn't replace the old class attribute.
+
+```html title="index.html"
+<h4 :contenteditable="store.editor.editable" class="italic" :class="' freeze' if not store.editor.editable else ''">Click on me to modify my text</h4>
+<button p-on:click="store.editor.toggle_editable()">Toggle editable</button>>
+```
+
+<div class="result" set:html={`
+    <h4 class="italic" :class="' freeze' if not store.editor.editable else ''" :contenteditable="store.editor.editable" >Click on me to modify my text</h4>
+    <button p-on:click="store.editor.toggle_editable()">Toggle editable</button>` }>
+</div>
+
