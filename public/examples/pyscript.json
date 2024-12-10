@@ -1,5 +1,5 @@
 {
     "files": {
-        "/public/examples/prunepy/prune.py": "./prune.py"
+        "/examples/prunepy/prune.py": "./prune.py"
     }
 }
